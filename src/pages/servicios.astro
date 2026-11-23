@@ -1,0 +1,13 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Services from '../components/Services.astro';
+import { site } from '../config/site';
+---
+
+<PageLayout
+	title={`Servicios de automatización con IA | ${site.name}`}
+	description="Chatbots de WhatsApp, agentes de voz, citas, integraciones, SEO local en Google y páginas web con panel personalizado."
+	current="/servicios"
+>
+	<Services level="h1" />
+</PageLayout>

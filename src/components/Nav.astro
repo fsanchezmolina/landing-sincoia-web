@@ -1,0 +1,59 @@
+---
+import { site } from '../config/site';
+
+interface Props {
+	current?: string;
+}
+const { current = '' } = Astro.props;
+
+const links = [
+	{ href: '/servicios', label: 'Servicios' },
+	{ href: '/como-trabajamos', label: 'Cómo trabajamos' },
+	{ href: '/preguntas-frecuentes', label: 'Preguntas' },
+];
+---
+
+<header class="relative z-20 border-b border-line bg-black/30 backdrop-blur-md">
+	<nav
+		aria-label="Principal"
+		class="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-5 md:px-8"
+	>
+		<ul class="hidden items-center gap-8 text-sm text-zinc-200 md:flex">
+			{
+				links.map((l) => (
+					<li>
+						<a
+							class:list={['transition hover:text-white', current === l.href && 'text-white underline decoration-brand-orange decoration-2 underline-offset-8']}
+							href={l.href}
+							aria-current={current === l.href ? 'page' : undefined}
+						>
+							{l.label}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+
+		<a href="/" class="col-start-1 flex items-center gap-2 md:col-start-2" aria-label={`${site.name}, inicio`}>
+			<svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+				<path
+					d="M4 28V14a8 8 0 0 1 8-8h14M4 20h10a6 6 0 0 0 6-6V6"
+					stroke="var(--color-brand-orange)"
+					stroke-width="4"
+					stroke-linecap="round"
+					stroke-linejoin="round"></path>
+			</svg>
+			<span class="text-lg font-medium tracking-wide text-white">{site.name}</span>
+		</a>
+
+		<div class="col-start-3 flex items-center justify-end gap-8 text-sm text-zinc-200">
+			<a
+				href="/contacto"
+				aria-current={current === '/contacto' ? 'page' : undefined}
+				class="rounded-lg border border-line bg-black px-5 py-3 text-sm font-medium text-white transition hover:border-brand-orange/70 hover:shadow-[0_0_24px_-6px_var(--color-brand-orange)]"
+			>
+				Solicitar información
+			</a>
+		</div>
+	</nav>
+</header>

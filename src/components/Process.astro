@@ -1,0 +1,31 @@
+---
+import { steps } from '../config/site';
+
+interface Props {
+	level?: 'h1' | 'h2';
+}
+const { level: H = 'h2' } = Astro.props;
+const Card = H === 'h1' ? 'h2' : 'h3';
+---
+
+<section id="proceso" class="scroll-mt-8 px-5 py-20 md:px-8">
+	<div class="mx-auto max-w-6xl">
+		<H class="mx-auto max-w-2xl text-center text-3xl font-medium tracking-tight text-white md:text-4xl">
+			Cómo trabajamos
+		</H>
+
+		<ol class="mt-12 grid gap-4 md:grid-cols-4">
+			{
+				steps.map((s, i) => (
+					<li class="rounded-card border border-line bg-ink-soft/70 p-6">
+						<span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-orange/15 text-sm font-medium text-brand-orange-soft">
+							{i + 1}
+						</span>
+						<Card class="mt-4 text-base font-medium text-white">{s.title}</Card>
+						<p class="mt-2 text-sm leading-relaxed text-zinc-400">{s.description}</p>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>

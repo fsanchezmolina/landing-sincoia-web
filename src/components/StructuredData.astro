@@ -1,0 +1,37 @@
+---
+import { site, services, faqs } from '../config/site';
+
+interface Props {
+	type: 'business' | 'faq';
+}
+const { type } = Astro.props;
+
+// Negocio de zona de servicio: sin dirección postal, solo áreas atendidas.
+const professionalService = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfessionalService',
+	'@id': `${site.url}/#negocio`,
+	name: site.name,
+	url: site.url,
+	description: site.seoDescription,
+	areaServed: site.cities.length
+		? site.cities.map((c) => ({ '@type': 'City', name: c }))
+		: { '@type': 'Country', name: 'España' },
+	knowsAbout: services.map((s) => s.title),
+	...(site.phone ? { telephone: site.phone } : {}),
+	...(site.email ? { email: site.email } : {}),
+};
+
+const faqPage = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqs.map((f) => ({
+		'@type': 'Question',
+		name: f.q,
+		acceptedAnswer: { '@type': 'Answer', text: f.a },
+	})),
+};
+---
+
+{type === 'business' && <script type="application/ld+json" set:html={JSON.stringify(professionalService)} />}
+{type === 'faq' && <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />}

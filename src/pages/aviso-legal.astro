@@ -1,0 +1,48 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site } from '../config/site';
+---
+
+<LegalLayout title="Aviso legal" description={`Aviso legal y datos del titular de ${site.name}.`}>
+	<h1>Aviso legal</h1>
+
+	<h2>1. Datos del titular</h2>
+	<p>
+		En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico
+		(LSSI-CE), se informa de que este sitio web es titularidad de:
+	</p>
+	<ul>
+		<li>Titular: [NOMBRE O RAZÓN SOCIAL]</li>
+		<li>NIF/CIF: [NIF O CIF]</li>
+		<li>Domicilio: [DOMICILIO DEL TITULAR]</li>
+		<li>Correo electrónico: [EMAIL DE CONTACTO]</li>
+		<li>Nombre comercial: {site.name}</li>
+	</ul>
+
+	<h2>2. Objeto</h2>
+	<p>
+		Este sitio web ofrece información sobre servicios de automatización con inteligencia artificial y permite
+		solicitar información o presupuesto a través de un formulario.
+	</p>
+
+	<h2>3. Condiciones de uso</h2>
+	<p>
+		El acceso y uso de este sitio implica aceptar este aviso legal. El usuario se compromete a hacer un uso
+		adecuado de los contenidos y a no emplearlos para actividades ilícitas o contrarias a la buena fe.
+	</p>
+
+	<h2>4. Propiedad intelectual</h2>
+	<p>
+		Los textos, diseños, logotipos y demás elementos de este sitio son propiedad del titular o se usan con
+		autorización. Queda prohibida su reproducción total o parcial sin permiso expreso.
+	</p>
+
+	<h2>5. Responsabilidad</h2>
+	<p>
+		El titular no garantiza la ausencia de errores en los contenidos ni la disponibilidad ininterrumpida del
+		sitio, y no se responsabiliza de los daños derivados de su uso, salvo en los supuestos previstos por la ley.
+	</p>
+
+	<h2>6. Legislación aplicable</h2>
+	<p>Este aviso se rige por la legislación española. Para cualquier controversia serán competentes los juzgados que resulten de aplicación conforme a derecho.</p>
+</LegalLayout>

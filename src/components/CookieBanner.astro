@@ -1,0 +1,69 @@
+---
+---
+
+<div
+	id="cookie-banner"
+	role="dialog"
+	aria-labelledby="cookie-title"
+	aria-live="polite"
+	hidden
+	class="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-2xl rounded-card border border-line bg-ink-soft/95 p-5 shadow-2xl backdrop-blur"
+>
+	<p id="cookie-title" class="text-sm font-medium text-white">Cookies</p>
+	<p class="mt-1 text-sm text-zinc-300">
+		Usamos solo cookies técnicas necesarias para que la web funcione. No cargamos analítica ni publicidad sin tu
+		permiso. Más información en la <a class="text-brand-orange-soft underline" href="/cookies">política de cookies</a>.
+	</p>
+	<div class="mt-4 flex flex-wrap gap-3">
+		<button
+			type="button"
+			data-cookie="accepted"
+			class="rounded-lg border border-brand-orange/60 bg-black px-5 py-2.5 text-sm font-medium text-white"
+		>
+			Aceptar
+		</button>
+		<button
+			type="button"
+			data-cookie="rejected"
+			class="rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-zinc-200 hover:border-white/40"
+		>
+			Rechazar
+		</button>
+	</div>
+</div>
+
+<script>
+	const KEY = 'cookie-consent';
+	const banner = document.getElementById('cookie-banner') as HTMLElement;
+
+	function read(): string | null {
+		try {
+			return localStorage.getItem(KEY);
+		} catch {
+			return null;
+		}
+	}
+	function save(value: string) {
+		try {
+			localStorage.setItem(KEY, value);
+		} catch {
+			/* sin almacenamiento: se vuelve a preguntar la próxima vez */
+		}
+		window.dispatchEvent(new CustomEvent('cookie-consent', { detail: value }));
+	}
+
+	if (!read()) banner.hidden = false;
+
+	banner.querySelectorAll<HTMLButtonElement>('[data-cookie]').forEach((b) =>
+		b.addEventListener('click', () => {
+			save(b.dataset.cookie!);
+			banner.hidden = true;
+		}),
+	);
+
+	document.querySelectorAll('[data-cookie-settings]').forEach((b) =>
+		b.addEventListener('click', () => {
+			banner.hidden = false;
+		}),
+	);
+</script>

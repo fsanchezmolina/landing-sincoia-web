@@ -1,0 +1,13 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site } from '../config/site';
+---
+
+<PageLayout
+	title={`Cuéntanos cómo te podemos ayudar | ${site.name}`}
+	description="Déjanos tus datos y cuéntanos cómo te podemos ayudar con la automatización, el SEO local o tu web. Te contactamos sin compromiso."
+	current="/contacto"
+>
+	<LeadForm level="h1" />
+</PageLayout>

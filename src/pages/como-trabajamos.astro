@@ -1,0 +1,13 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Process from '../components/Process.astro';
+import { site } from '../config/site';
+---
+
+<PageLayout
+	title={`Cómo trabajamos | ${site.name}`}
+	description="Así trabajamos: conversación inicial, diseño de la automatización, implantación y pruebas, y seguimiento con mejoras."
+	current="/como-trabajamos"
+>
+	<Process level="h1" />
+</PageLayout>

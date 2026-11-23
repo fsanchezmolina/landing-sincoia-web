@@ -1,0 +1,119 @@
+---
+import Nav from './Nav.astro';
+import FlowDiagram from './FlowDiagram.astro';
+import { site } from '../config/site';
+
+---
+
+<section class="relative isolate overflow-hidden">
+	<!-- Fondo: manchas de color con movimiento lento -->
+	<div class="hero-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+		<div class="blob blob-orange"></div>
+		<div class="blob blob-blue"></div>
+		<div class="blob blob-glow-l"></div>
+		<div class="blob blob-glow-r"></div>
+		<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink"></div>
+	</div>
+
+	<Nav />
+
+	<div class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+		<div class="mb-6 flex justify-center">
+			<a
+				href="/servicios"
+				class="flex items-center rounded-full border border-line bg-black/50 p-1 text-xs text-zinc-200 backdrop-blur"
+			>
+				<span class="rounded-full bg-brand-orange px-4 py-1.5 font-medium text-white">Novedad</span>
+				<span class="px-4 py-1.5">Agentes de WhatsApp y voz &rsaquo;</span>
+			</a>
+		</div>
+
+		<FlowDiagram />
+
+		<div class="mx-auto mt-6 flex max-w-3xl flex-col items-center text-center md:mt-2">
+			<p
+				class="mb-6 rounded-lg border border-brand-orange/40 bg-brand-orange/10 px-4 py-1.5 text-xs text-brand-orange-soft shadow-[0_0_24px_-8px_var(--color-brand-orange)]"
+			>
+				&#10022; Automatización de negocio con IA
+			</p>
+
+			<h1
+				class="bg-gradient-to-b from-white to-cream bg-clip-text text-4xl font-medium leading-[1.1] tracking-tight text-transparent sm:text-5xl md:text-6xl"
+			>
+				Automatización con IA para tu negocio
+			</h1>
+
+			<p class="mt-5 text-xl font-medium text-brand-orange-soft md:text-2xl">{site.slogan}</p>
+
+			<p class="mt-4 max-w-xl text-base text-zinc-300 md:text-lg">
+				Atendemos a tus clientes, gestionamos tus citas y automatizamos las tareas repetitivas. Además,
+				te ayudamos a aparecer en Google y creamos tu web con un panel a medida.
+			</p>
+
+			<div class="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+				<a
+					href="/contacto"
+					class="rounded-lg border border-brand-orange/60 bg-black px-7 py-3.5 text-sm font-medium text-white shadow-[0_0_30px_-8px_var(--color-brand-orange)] transition hover:shadow-[0_0_40px_-4px_var(--color-brand-orange)]"
+				>
+					Solicitar información &#10022;
+				</a>
+				<a
+					href="/servicios"
+					class="rounded-lg border border-line px-7 py-3.5 text-sm font-medium text-zinc-200 transition hover:border-white/40 hover:text-white"
+				>
+					Ver servicios
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.blob {
+		position: absolute;
+		border-radius: 9999px;
+		filter: blur(80px);
+	}
+	.blob-orange {
+		width: 70vw;
+		height: 38rem;
+		left: -18vw;
+		bottom: -6rem;
+		background: radial-gradient(closest-side, rgba(255, 77, 13, 0.85), rgba(255, 77, 13, 0));
+		animation: drift-a 18s ease-in-out infinite alternate;
+	}
+	.blob-blue {
+		width: 55vw;
+		height: 34rem;
+		right: -14vw;
+		bottom: -4rem;
+		background: radial-gradient(closest-side, rgba(29, 95, 168, 0.75), rgba(29, 95, 168, 0));
+		animation: drift-b 22s ease-in-out infinite alternate;
+	}
+	.blob-glow-l {
+		width: 28rem;
+		height: 18rem;
+		left: -8rem;
+		top: -4rem;
+		background: radial-gradient(closest-side, rgba(255, 255, 255, 0.18), transparent);
+		opacity: 0.8;
+	}
+	.blob-glow-r {
+		width: 28rem;
+		height: 18rem;
+		right: -8rem;
+		top: -4rem;
+		background: radial-gradient(closest-side, rgba(255, 255, 255, 0.14), transparent);
+		opacity: 0.8;
+	}
+	@keyframes drift-a {
+		to {
+			transform: translate3d(8vw, -3rem, 0) scale(1.12);
+		}
+	}
+	@keyframes drift-b {
+		to {
+			transform: translate3d(-8vw, -2rem, 0) scale(1.08);
+		}
+	}
+</style>

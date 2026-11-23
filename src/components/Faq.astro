@@ -1,0 +1,33 @@
+---
+import { faqs } from '../config/site';
+
+interface Props {
+	level?: 'h1' | 'h2';
+}
+const { level: H = 'h2' } = Astro.props;
+---
+
+<section id="faq" class="scroll-mt-8 px-5 py-20 md:px-8">
+	<div class="mx-auto max-w-3xl">
+		<H class="text-center text-3xl font-medium tracking-tight text-white md:text-4xl">Preguntas frecuentes</H>
+
+		<div class="mt-10 space-y-3">
+			{
+				faqs.map((f) => (
+					<details class="group rounded-card border border-line bg-ink-soft/70 p-5 open:border-brand-orange/40">
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left font-medium text-white [&::-webkit-details-marker]:hidden">
+							{f.q}
+							<span
+								class="text-brand-orange-soft transition group-open:rotate-45"
+								aria-hidden="true"
+							>
+								+
+							</span>
+						</summary>
+						<p class="mt-3 text-sm leading-relaxed text-zinc-400">{f.a}</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+</section>

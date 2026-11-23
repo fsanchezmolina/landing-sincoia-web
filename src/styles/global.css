@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@import "@fontsource-variable/outfit";
+
+@theme {
+	--color-brand-orange: #ff4d0d;
+	--color-brand-orange-soft: #ff8a4c;
+	--color-brand-blue: #1d5fa8;
+	--color-ink: #050506;
+	--color-ink-soft: #101114;
+	--color-line: rgba(255, 255, 255, 0.12);
+	--color-cream: #ffe3d2;
+	--font-sans: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+	--radius-card: 0.75rem;
+}
+
+html {
+	scroll-behavior: smooth;
+	background: var(--color-ink);
+}
+
+body {
+	font-family: var(--font-sans);
+	background: var(--color-ink);
+	color: #f4f4f5;
+	-webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	*, *::before, *::after {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-brand-orange-soft);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+/* Desplegables en oscuro: el listado nativo usa estos colores */
+select {
+	color-scheme: dark;
+}
+select option {
+	background-color: var(--color-ink-soft);
+	color: #f4f4f5;
+}
+select option:checked {
+	background-color: #2a1a12;
+	color: #ffffff;
+}
+
+/* Desplegable totalmente personalizado (navegadores con soporte; el resto usa el estilo oscuro de arriba) */
+@supports (appearance: base-select) {
+	select,
+	::picker(select) {
+		appearance: base-select;
+	}
+	select::picker-icon {
+		color: var(--color-brand-orange-soft);
+		transition: rotate 0.2s;
+	}
+	select:open::picker-icon {
+		rotate: 180deg;
+	}
+	::picker(select) {
+		background: var(--color-ink-soft);
+		border: 1px solid var(--color-line);
+		border-radius: 0.75rem;
+		padding: 0.375rem;
+		margin-top: 0.375rem;
+		box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8);
+	}
+	select option {
+		padding: 0.625rem 0.75rem;
+		border-radius: 0.5rem;
+		color: #e4e4e7;
+		background: transparent;
+		cursor: pointer;
+	}
+	select option:hover,
+	select option:focus-visible {
+		background: rgba(255, 138, 76, 0.16);
+		color: #ffffff;
+		outline: none;
+	}
+	select option:checked {
+		background: rgba(255, 138, 76, 0.24);
+		color: var(--color-brand-orange-soft);
+	}
+	select option::checkmark {
+		color: var(--color-brand-orange-soft);
+	}
+}

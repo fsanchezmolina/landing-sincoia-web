@@ -1,0 +1,23 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	current: string;
+}
+const { title, description, current } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+	<slot name="head" slot="head" />
+	<Nav current={current} />
+	<main class="min-h-[70vh]">
+		<slot />
+	</main>
+	<Footer />
+	<CookieBanner />
+</Layout>

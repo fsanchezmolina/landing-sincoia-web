@@ -1,0 +1,49 @@
+---
+import { site } from '../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line px-5 py-12 md:px-8">
+	<div class="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-start md:justify-between">
+		<div class="max-w-sm">
+			<p class="text-lg font-medium text-white">{site.name}</p>
+			<p class="mt-2 text-sm text-zinc-400">
+				{site.tagline}.
+			</p>
+		</div>
+
+		<nav aria-label="Secciones" class="text-sm">
+			<p class="mb-3 font-medium text-zinc-200">Web</p>
+			<ul class="space-y-2 text-zinc-400">
+				<li><a class="hover:text-white" href="/servicios">Servicios</a></li>
+				<li><a class="hover:text-white" href="/como-trabajamos">Cómo trabajamos</a></li>
+				<li><a class="hover:text-white" href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
+				<li><a class="hover:text-white" href="/contacto">Solicitar información</a></li>
+			</ul>
+		</nav>
+
+		<nav aria-label="Legal" class="text-sm">
+			<p class="mb-3 font-medium text-zinc-200">Información legal</p>
+			<ul class="space-y-2 text-zinc-400">
+				<li><a class="hover:text-white" href="/aviso-legal">Aviso legal</a></li>
+				<li><a class="hover:text-white" href="/privacidad">Política de privacidad</a></li>
+				<li><a class="hover:text-white" href="/cookies">Política de cookies</a></li>
+				<li><button type="button" class="hover:text-white" data-cookie-settings>Configurar cookies</button></li>
+			</ul>
+		</nav>
+
+		{
+			site.cities.length > 0 && (
+				<div class="text-sm">
+					<p class="mb-3 font-medium text-zinc-200">Zonas</p>
+					<ul class="space-y-2 text-zinc-400">
+						{site.cities.map((c) => <li>{c}</li>)}
+					</ul>
+				</div>
+			)
+		}
+	</div>
+
+	<p class="mx-auto mt-10 max-w-6xl text-xs text-zinc-400">&copy; {year} {site.name}. Todos los derechos reservados.</p>
+</footer>

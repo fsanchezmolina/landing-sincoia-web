@@ -1,0 +1,35 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site } from '../config/site';
+---
+
+<LegalLayout title="Política de cookies" description={`Cookies y almacenamiento local que usa ${site.name}.`}>
+	<h1>Política de cookies</h1>
+
+	<h2>1. ¿Qué son las cookies?</h2>
+	<p>
+		Las cookies y tecnologías similares son pequeños archivos que un sitio web guarda en tu dispositivo para
+		recordar información sobre tu visita.
+	</p>
+
+	<h2>2. Qué usamos en este sitio</h2>
+	<ul>
+		<li>
+			<strong>Almacenamiento técnico (necesario):</strong> guardamos tu elección sobre cookies para no volver a
+			preguntarte. No requiere consentimiento.
+		</li>
+		<li>
+			<strong>Analítica y publicidad:</strong> actualmente no se utilizan. Si se añadieran en el futuro, no se
+			cargarán hasta que las aceptes.
+		</li>
+	</ul>
+
+	<h2>3. Cómo cambiar tu decisión</h2>
+	<p>
+		Puedes cambiar tu elección en cualquier momento desde el enlace «Configurar cookies» del pie de página. También
+		puedes borrar los datos del sitio desde la configuración de tu navegador.
+	</p>
+
+	<h2>4. Contacto</h2>
+	<p>Para cualquier duda, escribe a [EMAIL DE CONTACTO].</p>
+</LegalLayout>

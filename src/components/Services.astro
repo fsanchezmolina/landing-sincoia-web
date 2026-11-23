@@ -1,0 +1,76 @@
+---
+import { services, sectors } from '../config/site';
+
+interface Props {
+	level?: 'h1' | 'h2';
+	compact?: boolean;
+}
+const { level: H = 'h2', compact = false } = Astro.props;
+const Card = H === 'h1' ? 'h2' : 'h3';
+
+const icons: Record<string, string> = {
+	whatsapp: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z',
+	voz: 'M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3ZM19 10v2a7 7 0 0 1-14 0v-2M12 19v3',
+	citas: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+	integraciones: 'M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9',
+	seo: 'M21 21l-4.3-4.3M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8 11h6M11 8v6',
+	web: 'M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01',
+};
+---
+
+<section id="servicios" class="scroll-mt-8 px-5 py-20 md:px-8">
+	<div class="mx-auto max-w-6xl">
+		<div class="mx-auto max-w-2xl text-center">
+			<H class="text-3xl font-medium tracking-tight text-white md:text-4xl">
+				Servicios de automatización con IA
+			</H>
+			<p class="mt-4 text-zinc-400">
+				Soluciones a medida para tu negocio.
+			</p>
+		</div>
+
+		<ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			{
+				services.map((s) => (
+					<li class="group rounded-card border border-line bg-ink-soft/70 p-6 transition hover:border-brand-orange/50">
+						<div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/5">
+							<svg
+								width="22"
+								height="22"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="var(--color-brand-orange-soft)"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d={icons[s.id]} />
+							</svg>
+						</div>
+						<Card class="text-lg font-medium text-white">{s.title}</Card>
+						<p class="mt-2 text-sm leading-relaxed text-zinc-400">{s.description}</p>
+					</li>
+				))
+			}
+		</ul>
+
+		{
+			compact && (
+				<p class="mt-8 text-center">
+					<a class="text-sm text-brand-orange-soft underline underline-offset-4" href="/servicios">
+						Ver todos los servicios
+					</a>
+				</p>
+			)
+		}
+
+		{!compact && <ul class="mt-8 flex flex-wrap justify-center gap-2" aria-label="Sectores con los que trabajamos">
+			{
+				sectors.map((s) => (
+					<li class="rounded-full border border-line px-4 py-1.5 text-xs text-zinc-300">{s}</li>
+				))
+			}
+		</ul>}
+	</div>
+</section>

@@ -1,0 +1,179 @@
+---
+import { services, otherService, site } from '../config/site';
+
+const options = [...services, otherService];
+const { level: H = 'h2' } = Astro.props as { level?: 'h1' | 'h2' };
+const field =
+	'w-full rounded-lg border border-line bg-black/60 px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none transition focus:border-brand-orange/70 focus:ring-2 focus:ring-brand-orange/30 aria-[invalid=true]:border-red-400';
+const label = 'mb-1.5 block text-sm font-medium text-zinc-200';
+const error = 'mt-1.5 hidden text-xs text-red-300';
+---
+
+<section id="contacto" class="scroll-mt-8 px-5 py-20 md:px-8">
+	<div class="mx-auto max-w-2xl">
+		<div class="text-center">
+			<H class="text-3xl font-medium tracking-tight text-white md:text-4xl">Cuéntanos cómo te podemos ayudar</H>
+			<p class="mt-4 text-zinc-400">
+				Déjanos tus datos y te contactamos para estudiar tu caso. Sin compromiso.
+			</p>
+		</div>
+
+		<form
+			id="lead-form"
+			novalidate
+			class="mt-10 space-y-5 rounded-card border border-line bg-ink-soft/70 p-6 md:p-8"
+		>
+			<div class="grid gap-5 sm:grid-cols-2">
+				<div>
+					<label for="name" class={label}>Nombre <span aria-hidden="true">*</span></label>
+					<input id="name" name="name" type="text" autocomplete="name" maxlength="100" required class={field} />
+					<p id="err-name" class={error} role="alert"></p>
+				</div>
+				<div>
+					<label for="email" class={label}>Email <span aria-hidden="true">*</span></label>
+					<input id="email" name="email" type="email" autocomplete="email" maxlength="150" required class={field} />
+					<p id="err-email" class={error} role="alert"></p>
+				</div>
+			</div>
+
+			<div class="grid gap-5 sm:grid-cols-2">
+				<div>
+					<label for="phone" class={label}>Teléfono <span aria-hidden="true">*</span></label>
+					<input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="20" required class={field} />
+					<p id="err-phone" class={error} role="alert"></p>
+				</div>
+				<div>
+					<label for="company" class={label}>Empresa <span aria-hidden="true">*</span></label>
+					<input id="company" name="company" type="text" autocomplete="organization" maxlength="120" required class={field} />
+					<p id="err-company" class={error} role="alert"></p>
+				</div>
+			</div>
+
+			<div>
+				<label for="business_activity" class={label}>¿A qué se dedica tu empresa? <span class="font-normal text-zinc-400">(opcional)</span></label>
+				<input
+					id="business_activity"
+					name="business_activity"
+					type="text"
+					maxlength="200"
+					placeholder="Ej.: clínica dental, restaurante, inmobiliaria…"
+					class={field}
+				/>
+				<p id="err-business_activity" class={error} role="alert"></p>
+			</div>
+
+			<div>
+				<label for="service" class={label}>¿Qué servicio necesitas? <span class="font-normal text-zinc-400">(opcional)</span></label>
+				<select id="service" name="service" class={field}>
+					<option value="">Aún no lo sé</option>
+					{options.map((o) => <option value={o.id}>{o.title}</option>)}
+				</select>
+				<p id="err-service" class={error} role="alert"></p>
+			</div>
+
+			<!-- Campo trampa anti-spam: invisible para personas -->
+			<div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+				<label for="website">No rellenar este campo</label>
+				<input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+			</div>
+
+			<div>
+				<label class="flex items-start gap-3 text-sm text-zinc-300">
+					<input
+						id="consent"
+						name="consent"
+						type="checkbox"
+						required
+						class="mt-0.5 h-4 w-4 shrink-0 accent-brand-orange"
+					/>
+					<span>
+						He leído y acepto la <a class="text-brand-orange-soft underline" href="/privacidad">política de privacidad</a>{' '}
+						y consiento que {site.name} trate mis datos para responder a mi solicitud.
+					</span>
+				</label>
+				<p id="err-consent" class={error} role="alert"></p>
+			</div>
+
+			<button
+				type="submit"
+				class="w-full rounded-lg border border-brand-orange/60 bg-black px-7 py-3.5 text-sm font-medium text-white shadow-[0_0_30px_-8px_var(--color-brand-orange)] transition hover:shadow-[0_0_40px_-4px_var(--color-brand-orange)] disabled:opacity-60"
+			>
+				Solicitar información
+			</button>
+
+			<p class="text-xs text-zinc-400"><span aria-hidden="true">*</span> Campos obligatorios</p>
+
+			<p id="form-status" class="hidden rounded-lg px-4 py-3 text-sm" role="status" aria-live="polite"></p>
+		</form>
+	</div>
+</section>
+
+<script>
+	import { validateLead } from '../lib/validate';
+	import { submitLead } from '../lib/submitLead';
+
+	const form = document.getElementById('lead-form') as HTMLFormElement;
+	const status = document.getElementById('form-status') as HTMLParagraphElement;
+	const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+	const names = ['name', 'email', 'phone', 'company', 'business_activity', 'service', 'consent'] as const;
+
+	function showErrors(errors: Record<string, string>) {
+		let first: HTMLElement | null = null;
+		for (const n of names) {
+			const input = document.getElementById(n) as HTMLElement;
+			const p = document.getElementById(`err-${n}`) as HTMLElement;
+			const msg = errors[n];
+			if (msg) {
+				p.textContent = msg;
+				p.classList.remove('hidden');
+				input.setAttribute('aria-invalid', 'true');
+				input.setAttribute('aria-describedby', `err-${n}`);
+				first ??= input;
+			} else {
+				p.textContent = '';
+				p.classList.add('hidden');
+				input.removeAttribute('aria-invalid');
+			}
+		}
+		first?.focus();
+	}
+
+	function setStatus(kind: 'ok' | 'error' | null, text = '') {
+		status.className = 'rounded-lg px-4 py-3 text-sm';
+		if (!kind) {
+			status.classList.add('hidden');
+			status.textContent = '';
+			return;
+		}
+		status.classList.add(kind === 'ok' ? 'bg-green-500/15' : 'bg-red-500/15', kind === 'ok' ? 'text-green-200' : 'text-red-200');
+		status.textContent = text;
+	}
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		setStatus(null);
+		const data = {
+			name: (form.elements.namedItem('name') as HTMLInputElement).value,
+			email: (form.elements.namedItem('email') as HTMLInputElement).value,
+			phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+			company: (form.elements.namedItem('company') as HTMLInputElement).value,
+			business_activity: (form.elements.namedItem('business_activity') as HTMLInputElement).value,
+			service: (form.elements.namedItem('service') as HTMLSelectElement).value,
+			consent: (form.elements.namedItem('consent') as HTMLInputElement).checked,
+			website: (form.elements.namedItem('website') as HTMLInputElement).value,
+		};
+		const errors = validateLead(data);
+		showErrors(errors);
+		if (Object.keys(errors).length) return;
+
+		button.disabled = true;
+		const result = await submitLead(data);
+		button.disabled = false;
+		if (result.ok) {
+			form.reset();
+			setStatus('ok', '¡Gracias! Hemos recibido tu solicitud y te contactaremos pronto.');
+		} else {
+			setStatus('error', result.message);
+		}
+	});
+</script>

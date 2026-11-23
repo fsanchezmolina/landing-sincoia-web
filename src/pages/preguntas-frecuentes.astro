@@ -1,0 +1,15 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Faq from '../components/Faq.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { site } from '../config/site';
+---
+
+<PageLayout
+	title={`Preguntas frecuentes | ${site.name}`}
+	description="Resolvemos las dudas más habituales sobre automatización con IA: qué es, para quién, plazos, precios y protección de datos."
+	current="/preguntas-frecuentes"
+>
+	<StructuredData slot="head" type="faq" />
+	<Faq level="h1" />
+</PageLayout>

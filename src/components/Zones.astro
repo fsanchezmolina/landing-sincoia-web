@@ -1,0 +1,38 @@
+---
+import { site, sectors } from '../config/site';
+---
+
+{
+	site.cities.length > 0 && (
+		<section id="zonas" class="scroll-mt-8 px-5 py-20 md:px-8">
+			<div class="mx-auto max-w-6xl">
+				<div class="mx-auto max-w-2xl text-center">
+					<h2 class="text-3xl font-medium tracking-tight text-white md:text-4xl">
+						Automatización con IA en {site.cities.join(' y ')}
+					</h2>
+					<p class="mt-4 text-zinc-400">
+						Trabajamos con negocios de {site.cities.join(' y ')}, y en remoto con cualquier negocio de España.
+					</p>
+				</div>
+
+				<div class="mt-12 grid gap-4 md:grid-cols-2">
+					{site.cities.map((city) => (
+						<div class="rounded-card border border-line bg-ink-soft/70 p-6">
+							<h3 class="text-xl font-medium text-white">{city}</h3>
+							<p class="mt-2 text-sm leading-relaxed text-zinc-400">
+								Ayudamos a negocios de {city} a atender mejor a sus clientes y a ahorrar tiempo en tareas
+								repetitivas con chatbots de WhatsApp, agentes de voz, citas automáticas e integraciones.
+							</p>
+						</div>
+					))}
+				</div>
+
+				<ul class="mt-8 flex flex-wrap justify-center gap-2">
+					{sectors.map((s) => (
+						<li class="rounded-full border border-line px-4 py-1.5 text-xs text-zinc-300">{s}</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	)
+}
