@@ -2,7 +2,7 @@
 // Todo lo marcado como PROVISIONAL se cambia aquí y se refleja en toda la web.
 
 export const site = {
-	name: 'Automia', // PROVISIONAL: nombre de ejemplo, pendiente del definitivo
+	name: 'SincroIA', // nombre definitivo de la marca (dominio sincroia.es)
 	url: 'https://sincroia.es', // dominio definitivo (debe coincidir con `site` en astro.config.mjs)
 	locale: 'es-ES',
 	phone: '', // PROVISIONAL: se rellena cuando exista
