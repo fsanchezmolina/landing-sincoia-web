@@ -1,0 +1,43 @@
+name: Publicar en GitHub Pages
+
+# Basado en el workflow oficial de Astro (withastro/github-pages).
+# Las acciones van fijadas por commit (el comentario indica la versión).
+
+on:
+  # Cada push a main compila la web y la publica
+  push:
+    branches: [main]
+  # Permite lanzarlo a mano desde la pestaña Actions de GitHub
+  workflow_dispatch:
+
+# Permisos mínimos: leer el código y crear el despliegue de Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo despliegue a la vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Instalar, compilar y subir la web
+        uses: withastro/action@fc88a7002f0c62327f26fb1b15f2a1d581249278 # v5.1.0
+        # Node 22 por defecto; el proyecto pide >=22.12.0 (package.json)
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
